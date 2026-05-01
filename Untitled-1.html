@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>FOS-IA – Formation Téléconseiller Bilingue en Ligne</title>
+<meta name="description" content="FOS-IA : Plateforme de formation pour téléconseiller bilingue. 5 modules pédagogiques, exercices interactifs, correction automatique et feedback pseudo-IA.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#6C5CE7;--primary-dark:#5A4BD1;--secondary:#00B894;--accent:#FD79A8;--dark:#2D3436;--light:#F8F9FA;--gray:#636E72;--white:#FFFFFF;--shadow:0 4px 20px rgba(108,92,231,0.12);--radius:12px}
+body{font-family:'Inter',sans-serif;color:var(--dark);background:linear-gradient(180deg,#eef1ff 0%,#ffffff 60%);line-height:1.7;overflow-x:hidden;min-height:100vh}
+a{text-decoration:none;color:inherit;transition:all .3s}
+
+/* NAV */
+.nav{position:fixed;top:0;width:100%;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);z-index:1000;border-bottom:1px solid rgba(108,92,231,0.12);padding:0 2rem;height:70px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 12px 45px rgba(108,92,231,0.05)}
+.nav-logo{font-size:1.6rem;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.02em}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{font-weight:500;font-size:.9rem;color:var(--gray);position:relative}
+.nav-links a:hover{color:var(--primary)}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--primary);transition:width .3s}
+.nav-links a:hover::after{width:100%}
+.nav-cta{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--white)!important;padding:.6rem 1.4rem;border-radius:50px;font-weight:600}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(108,92,231,0.4)}
+.nav-cta::after{display:none!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
+.hamburger span{width:25px;height:2px;background:var(--dark);transition:.3s}
+
+/* HERO */
+.hero{margin-top:70px;padding:5rem 2rem;background:linear-gradient(135deg,#6C5CE7 0%,#a29bfe 48%,#fd79a8 100%);color:var(--white);text-align:center;position:relative;overflow:hidden;box-shadow:0 24px 90px rgba(108,92,231,0.18)}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:230%;height:230%;background:radial-gradient(circle,rgba(255,255,255,0.08) 1px,transparent 1px);background-size:35px 35px;animation:drift 22s linear infinite}
+.hero::after{content:'';position:absolute;right:-100px;bottom:-120px;width:320px;height:320px;background:rgba(255,255,255,0.18);border-radius:50%;filter:blur(20px);}
+@keyframes drift{to{transform:translate(40px,40px)}}
+.hero-content{max-width:840px;margin:0 auto;position:relative;z-index:1;display:grid;gap:1.5rem}
+.hero-badge{display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.22);backdrop-filter:blur(10px);padding:.55rem 1.4rem;border-radius:999px;font-size:.85rem;font-weight:700;margin-bottom:1.5rem;letter-spacing:1px;text-transform:uppercase}
+.hero-chips{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
+.hero-chip{background:rgba(255,255,255,0.18);backdrop-filter:blur(10px);padding:.75rem 1.2rem;border-radius:16px;font-size:.9rem;color:rgba(255,255,255,0.95);min-width:180px;text-align:center}
+.hero h1{font-size:3rem;font-weight:800;line-height:1.1;margin-bottom:1rem;letter-spacing:-.03em}
+.hero p{font-size:1.1rem;opacity:.92;max-width:640px;margin:0 auto 2rem;line-height:1.75}
+.hero-actions{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-top:-.5rem}
+.hero-btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;background:var(--white);color:var(--primary);padding:1rem 2.5rem;border-radius:50px;font-weight:700;font-size:1rem;box-shadow:0 10px 40px rgba(0,0,0,0.16);transition:all .25s ease}
+.hero-secondary{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:1rem 2rem;border-radius:50px;border:1px solid rgba(255,255,255,0.45);color:rgba(255,255,255,0.95);background:rgba(255,255,255,0.15);font-weight:600;transition:all .25s ease}
+.hero-secondary:hover{transform:translateY(-2px);background:rgba(255,255,255,0.22)}
+.hero-btn:hover{transform:translateY(-3px) scale(1.01);box-shadow:0 16px 50px rgba(0,0,0,0.2)}
+
+/* SHARE BAR */
+.share-bar{display:flex;align-items:center;gap:1rem;padding:1rem 2rem;max-width:900px;margin:-1.5rem auto 0;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);position:relative;z-index:2}
+.share-bar span{font-size:.85rem;font-weight:600;color:var(--gray)}
+.share-bar a{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:.85rem;transition:transform .2s}
+.share-bar a:hover{transform:scale(1.15)}
+.s-fb{background:#1877F2}.s-tw{background:#1DA1F2}.s-li{background:#0A66C2}.s-wa{background:#25D366}.s-tg{background:#0088CC}
+
+/* CONTENT ARTICLE */
+.article-wrap{max-width:900px;margin:3rem auto;padding:0 2rem}
+.article-wrap h2{font-size:1.7rem;font-weight:800;margin:2.5rem 0 1rem;color:var(--primary);position:relative;padding-left:1rem;border-left:4px solid var(--primary)}
+.article-wrap h3{font-size:1.3rem;font-weight:700;margin:2rem 0 .8rem;color:var(--dark)}
+.article-wrap p{color:var(--gray);margin-bottom:1.2rem;font-size:1rem}
+.article-wrap ul{list-style:none;margin-bottom:1.5rem}
+.article-wrap ul li{padding:.5rem 0 .5rem 1.8rem;position:relative;color:var(--gray)}
+.article-wrap ul li::before{content:'✓';position:absolute;left:0;color:var(--secondary);font-weight:700}
+
+/* FEATURES GRID */
+.features{padding:4rem 2rem;background:var(--white)}
+.features-title{text-align:center;font-size:2rem;font-weight:800;margin-bottom:.5rem}
+.features-sub{text-align:center;color:var(--gray);margin-bottom:3rem;max-width:600px;margin-left:auto;margin-right:auto}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;max-width:1100px;margin:0 auto}
+.feature-card{background:linear-gradient(180deg,#ffffff 0%,#f8f9ff 100%);border:1px solid rgba(108,92,231,0.1);border-radius:var(--radius);padding:2rem;transition:all .3s ease;position:relative;overflow:hidden}
+.feature-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(108,92,231,0.12);border-color:var(--primary)}
+.feature-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--primary),var(--accent));transform:scaleX(0);transition:transform .3s ease;transform-origin:left}
+.feature-card:hover::before{transform:scaleX(1)}
+.feature-card h4{transition:color .3s ease}
+.feature-card:hover h4{color:var(--primary)}
+.feature-icon{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:var(--white);margin-bottom:1rem}
+.fi-1{background:linear-gradient(135deg,#6C5CE7,#a29bfe)}
+.fi-2{background:linear-gradient(135deg,#00B894,#55efc4)}
+.fi-3{background:linear-gradient(135deg,#FD79A8,#fab1a0)}
+.fi-4{background:linear-gradient(135deg,#FDCB6E,#f39c12)}
+.fi-5{background:linear-gradient(135deg,#0984e3,#74b9ff)}
+.fi-6{background:linear-gradient(135deg,#e17055,#d63031)}
+.feature-card h4{font-size:1.05rem;font-weight:700;margin-bottom:.5rem}
+.feature-card p{font-size:.9rem;color:var(--gray);line-height:1.6}
+
+/* MODULES */
+.modules{padding:4rem 2rem;background:linear-gradient(180deg,#eef1ff,#fff)}
+.modules-title{text-align:center;font-size:2rem;font-weight:800;margin-bottom:.8rem}
+.modules-subtitle{text-align:center;color:var(--gray);font-size:1rem;margin-bottom:2.5rem;max-width:600px;margin-left:auto;margin-right:auto}
+.modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.8rem;max-width:1100px;margin:0 auto}
+.module-card{text-align:left;padding:2rem 1.5rem;border-radius:var(--radius);background:linear-gradient(180deg,#ffffff 0%,#f8f9ff 100%);box-shadow:0 16px 35px rgba(108,92,231,0.08);transition:all .3s;cursor:pointer;border:1px solid rgba(108,92,231,0.12)}
+.module-card:hover{border-color:var(--primary);transform:translateY(-5px);box-shadow:0 24px 50px rgba(108,92,231,0.16)}
+.module-num{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));color:var(--white);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;margin:0 auto 1rem;box-shadow:0 10px 30px rgba(108,92,231,0.1)}
+.module-card h4{font-size:1.08rem;font-weight:800;margin-bottom:.5rem}
+.module-card p{font-size:.92rem;color:var(--gray);margin-bottom:.85rem;line-height:1.65}
+.module-card ul{list-style:none;margin:0;padding:0;text-align:left}
+.module-card ul li{padding:.75rem 0 .75rem 1.6rem;position:relative;color:var(--dark);font-size:.9rem;line-height:1.7}
+.module-card ul li::before{content:'»';position:absolute;left:0;color:var(--primary);font-weight:700;transform:translateX(-2px)}
+.module-card strong{color:var(--primary)}
+
+.module-modal{position:fixed;inset:0;background:rgba(0,0,0,0.55);display:flex;justify-content:center;align-items:center;opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:2000}
+.module-modal.active{opacity:1;pointer-events:auto}
+.module-modal-content{background:var(--white);border-radius:24px;box-shadow:0 24px 80px rgba(0,0,0,0.18);max-width:720px;width:90%;max-height:90vh;overflow:auto;padding:2.5rem;position:relative;border:1px solid rgba(108,92,231,0.14)}
+.module-modal-close{position:absolute;top:1rem;right:1rem;width:42px;height:42px;border:none;border-radius:50%;background:rgba(45,52,54,0.08);color:var(--dark);font-size:1.5rem;cursor:pointer;transition:background .2s}
+.module-modal-close:hover{background:rgba(45,52,54,0.16)}
+.module-modal-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.module-modal-header .module-num{width:54px;height:54px;font-size:1rem;box-shadow:0 12px 35px rgba(108,92,231,0.12)}
+.module-modal-header h3{font-size:1.45rem;margin:0}
+.module-modal-header p{margin:0;color:var(--gray);font-size:.95rem;line-height:1.75}
+.module-modal-list{list-style:none;padding:0;margin-top:1rem}
+.module-modal-list li{padding:.85rem 0;border-bottom:1px solid rgba(0,0,0,0.08);color:var(--gray);font-size:.95rem}
+.module-modal-list li:last-child{border-bottom:none}
+.module-modal-list li::before{content:'✓';margin-right:.8rem;color:var(--secondary);font-weight:700}
+
+/* CTA */
+.cta-section{padding:4rem 2rem;text-align:center;background:linear-gradient(135deg,var(--primary),#a29bfe);color:var(--white);position:relative}
+.cta-section h2{font-size:2rem;font-weight:800;margin-bottom:1rem}
+.cta-section p{opacity:.9;margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto}
+.cta-btn{display:inline-block;background:var(--white);color:var(--primary);padding:1rem 2.5rem;border-radius:50px;font-weight:700;font-size:1.05rem;box-shadow:0 8px 25px rgba(0,0,0,0.15);transition:all .3s}
+.cta-btn:hover{transform:translateY(-3px) scale(1.03)}
+
+/* RELATED POSTS */
+.related{padding:4rem 2rem;background:linear-gradient(180deg,#ffffff,#f8f9ff)}
+.related-title{text-align:center;font-size:1.8rem;font-weight:800;margin-bottom:2.5rem}
+.related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;max-width:1100px;margin:0 auto}
+.related-card{border-radius:var(--radius);overflow:hidden;background:var(--light);box-shadow:0 8px 25px rgba(108,92,231,0.08);transition:all .3s ease;border:1px solid rgba(108,92,231,0.08)}
+.related-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(108,92,231,0.14)}
+.related-img{height:160px;background-size:cover;background-position:center;position:relative}
+.related-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.3),transparent)}
+.related-body{padding:1.2rem}
+.related-date{font-size:.75rem;color:var(--primary);font-weight:600;margin-bottom:.4rem}
+.related-body h4{font-size:.95rem;font-weight:700;line-height:1.4}
+
+/* FOOTER */
+.footer{background:var(--dark);color:rgba(255,255,255,0.7);padding:3rem 2rem 1.5rem}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;max-width:1100px;margin:0 auto 2rem}
+.footer-col h5{color:var(--white);font-size:.95rem;font-weight:700;margin-bottom:1rem}
+.footer-col a{display:block;font-size:.85rem;padding:.3rem 0;transition:color .2s}
+.footer-col a:hover{color:var(--primary)}
+.footer-col p{font-size:.85rem;line-height:1.7}
+.footer-social{display:flex;gap:.8rem;margin-top:1rem}
+.footer-social a{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:var(--white);transition:all .2s}
+.footer-social a:hover{background:var(--primary);transform:scale(1.1)}
+.footer-bottom{text-align:center;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.1);font-size:.8rem}
+
+/* TABLET */
+@media(max-width:1024px){
+.hero h1{font-size:2.2rem}
+.features-grid{grid-template-columns:repeat(2,1fr)}
+.modules-grid{grid-template-columns:repeat(3,1fr)}
+.footer-grid{grid-template-columns:repeat(2,1fr)}
+}
+/* MOBILE */
+@media(max-width:768px){
+.nav{padding:0 1rem;height:65px}
+.nav-logo{font-size:1.4rem}
+.nav-links{display:none;position:fixed;top:65px;left:0;right:0;bottom:0;background:var(--white);flex-direction:column;justify-content:center;align-items:center;gap:2rem;z-index:999}
+.nav-links.active{display:flex}
+.hamburger{display:flex}
+.hero{padding:3rem 1.5rem;margin-top:65px}
+.hero h1{font-size:2rem;line-height:1.15}
+.hero p{font-size:.95rem;line-height:1.65}
+.hero-chips{gap:.8rem;margin-bottom:1rem}
+.hero-chip{min-width:150px;font-size:.85rem;padding:.6rem 1rem}
+.hero-btn{padding:.8rem 1.8rem;font-size:.95rem}
+.hero-secondary{padding:.8rem 1.4rem;font-size:.9rem}
+.share-bar{flex-wrap:wrap;margin:-.3rem 1rem 0;padding:.6rem 1rem;gap:.8rem}
+.features-grid,.modules-grid,.related-grid{grid-template-columns:1fr;gap:1.2rem}
+.features-title,.modules-title,.related-title{font-size:1.4rem;margin-bottom:2rem}
+.feature-card{padding:1.5rem}
+.module-card{padding:1.5rem;text-align:center}
+.module-num{margin:0 auto 1rem}
+.cta-section{padding:2.5rem 1.5rem}
+.cta-section h2{font-size:1.4rem}
+.cta-section p{font-size:.95rem}
+.cta-btn{padding:.8rem 1.8rem}
+.article-wrap{padding:0 1rem;margin:1.5rem auto}
+.article-wrap h2{font-size:1.25rem;padding-left:.8rem}
+.article-wrap h3{font-size:1.1rem}
+.footer-grid{grid-template-columns:1fr;gap:1.5rem}
+.footer-col h5{font-size:.9rem}
+.footer-col a,.footer-col p{font-size:.8rem}
+.module-modal-content{width:95%;padding:1.5rem;border-radius:20px}
+.module-modal-header{flex-direction:column;text-align:center}
+.module-modal-header .module-num{margin:0 auto 1rem}
+}
+
+/* ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(30px);transition:all .6s cubic-bezier(0.34,1.56,0.64,1)}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+.pulse{animation:pulse 2s ease-in-out infinite}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="navbar">
+<div class="nav-logo">FOS-IA</div>
+<div class="nav-links" id="navLinks">
+<a href="#features">Fonctionnalités</a>
+<a href="#modules">Modules</a>
+<a href="#article">À propos</a>
+<a href="#contact">Contact</a>
+<a href="#cta" class="nav-cta">Commencer</a>
+</div>
+<div class="hamburger" id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('active')">
+<span></span><span></span><span></span>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-content">
+<div class="hero-badge">🎓 FOS-IA · Téléconseiller Bilingue</div>
+<h1>Devenez Téléconseiller Bilingue grâce au Français sur Objectifs Spécifiques & l'IA</h1>
+<p>Une plateforme FOS-IA complète : 5 modules pédagogiques, exercices interactifs, correction automatique et feedback pseudo-IA — conçue pour les téléconseillers bilingues.</p>
+<div class="hero-chips">
+<div class="hero-chip"><span style="opacity:.85">Réalisé par</span><br><strong>Abdelmajid EL MAJDOUB</strong></div>
+<div class="hero-chip"><span style="opacity:.85">Encadré par</span><br><strong>Pr. Driss ELOMARI</strong></div>
+</div>
+<div class="hero-actions">
+<a href="#features" class="hero-btn">Découvrir la plateforme →</a>
+<a href="#modules" class="hero-secondary">Voir les exercices</a>
+</div>
+</div>
+</section>
+
+<!-- SHARE BAR -->
+<div class="share-bar">
+<span>Partager :</span>
+<a href="#" class="s-fb"><i class="fab fa-facebook-f"></i></a>
+<a href="#" class="s-tw"><i class="fab fa-twitter"></i></a>
+<a href="#" class="s-li"><i class="fab fa-linkedin-in"></i></a>
+<a href="#" class="s-wa"><i class="fab fa-whatsapp"></i></a>
+<a href="#" class="s-tg"><i class="fab fa-telegram-plane"></i></a>
+</div>
+
+<!-- ARTICLE CONTENT -->
+<section class="article-wrap" id="article">
+<h2>FOS-IA pour Téléconseiller Bilingue</h2>
+<p>Notre plateforme FOS-IA propose un système complet de Français sur Objectifs Spécifiques conçu spécifiquement pour les téléconseillers bilingues. Que vous soyez en formation initiale ou en reconversion vers les métiers du centre d'appel, notre parcours intelligent vous accompagne avec des mises en situation réalistes et un feedback pseudo-IA personnalisé.</p>
+
+<h3>Une approche adaptée au métier de téléconseiller</h3>
+<p>Le système FOS-IA répond au besoin concret des centres d'appel francophones au Maroc. La plateforme cible les compétences clés du téléconseiller bilingue : accueil téléphonique, gestion de réclamations, argumentation commerciale, rédaction d'e-mails professionnels et compréhension de scripts d'appel en français.</p>
+<p>Les contenus sont alignés sur les exigences du marché offshore marocain, avec des simulations d'appels, des jeux de rôle client-agent et des exercices ancrés dans le quotidien du téléconseiller bilingue.</p>
+
+<h3>Un accompagnement intelligent par pseudo-IA</h3>
+<p>Le moteur FOS-IA analyse vos réponses en temps réel et génère un feedback pseudo-IA détaillé, adapté au contexte du téléconseiller bilingue. Chaque exercice est corrigé automatiquement avec des explications contextuelles pour vous aider à perfectionner votre français professionnel.</p>
+<ul>
+<li>Correction automatique instantanée de tous les exercices</li>
+<li>Feedback détaillé avec explications contextuelles</li>
+<li>Analyse pédagogique simulée de votre progression</li>
+<li>Recommandations personnalisées selon votre niveau</li>
+<li>Suivi de performance par module et par compétence</li>
+</ul>
+
+<h3>Des exercices interactifs orientés métier</h3>
+<p>Chaque module intègre des exercices interactifs pensés pour le téléconseiller bilingue : QCM sur le vocabulaire du centre d'appel, simulations de scripts, production d'e-mails professionnels, compréhension de consignes client et traduction de termes techniques. Un apprentissage 100% orienté métier.</p>
+
+<h3>L'importance de la régularité</h3>
+<p>Quelle que soit votre niveau de départ, la clé de la réussite réside dans la pratique régulière. Notre plateforme vous accompagne avec un tableau de bord de progression, des rappels personnalisés et une analyse pédagogique simulée qui vous aide à identifier vos points forts et axes d'amélioration.</p>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+<h2 class="features-title fade-up">Ce que notre plateforme vous offre</h2>
+<p class="features-sub fade-up">Une suite complète d'outils pédagogiques pour maîtriser le FOS</p>
+<div class="features-grid">
+<div class="feature-card fade-up">
+<div class="feature-icon fi-1"><i class="fas fa-brain"></i></div>
+<h4>Système FOS-IA</h4>
+<p>Un système FOS-IA complet dédié à la formation des téléconseillers bilingues du marché offshore.</p>
+</div>
+<div class="feature-card fade-up">
+<div class="feature-icon fi-2"><i class="fas fa-book-open"></i></div>
+<h4>5 Modules Pédagogiques</h4>
+<p>Lexique, Pragmatique, Compréhension, Production et Traduction — un parcours structuré et progressif.</p>
+</div>
+<div class="feature-card fade-up">
+<div class="feature-icon fi-3"><i class="fas fa-gamepad"></i></div>
+<h4>Exercices Interactifs</h4>
+<p>QCM, textes à trous, production écrite et orale pour un apprentissage dynamique et engageant.</p>
+</div>
+<div class="feature-card fade-up">
+<div class="feature-icon fi-4"><i class="fas fa-check-double"></i></div>
+<h4>Correction Automatique</h4>
+<p>Évaluation instantanée de vos réponses avec des scores détaillés et explications claires.</p>
+</div>
+<div class="feature-card fade-up">
+<div class="feature-icon fi-5"><i class="fas fa-robot"></i></div>
+<h4>Feedback Pseudo-IA</h4>
+<p>Un système intelligent qui analyse vos erreurs et propose des recommandations adaptées au métier de téléconseiller.</p>
+</div>
+<div class="feature-card fade-up">
+<div class="feature-icon fi-6"><i class="fas fa-chart-line"></i></div>
+<h4>Analyse Pédagogique</h4>
+<p>Suivi de progression simulé avec des rapports détaillés sur vos performances par compétence.</p>
+</div>
+</div>
+</section>
+
+<!-- MODULES -->
+<section class="modules" id="modules">
+<h2 class="modules-title fade-up">5 Modules Pédagogiques</h2>
+<p class="modules-subtitle fade-up">Explorez nos exercices interactifs conçus spécifiquement pour les téléconseillers bilingues</p>
+<div class="modules-grid">
+<div class="module-card fade-up"><div class="module-num">1</div><h4>Lexique</h4><p>Vocabulaire spécialisé et terminologie professionnelle</p><ul><li>Associer les termes de centre d’appel à leur définition</li><li>Compléter un glossaire métier avec des expressions clés</li></ul></div>
+<div class="module-card fade-up"><div class="module-num">2</div><h4>Pragmatique</h4><p>Communication contextuelle et actes de langage</p><ul><li>Choisir les formules adaptées selon le type d’appel</li><li>Analyser des dialogues et repérer l’intention de l’énoncé</li></ul></div>
+<div class="module-card fade-up"><div class="module-num">3</div><h4>Compréhension</h4><p>Compréhension orale et écrite de documents professionnels</p><ul><li>Répondre à des questions sur un extrait de conversation client</li><li>Identifier les informations essentielles dans un e-mail professionnel</li></ul></div>
+<div class="module-card fade-up"><div class="module-num">4</div><h4>Production</h4><p>Rédaction et expression orale en contexte professionnel</p><ul><li>Rédiger un message de suivi client clair et professionnel</li><li>Proposer une réponse structurée à une réclamation</li></ul></div>
+<div class="module-card fade-up"><div class="module-num">5</div><h4>Traduction</h4><p>Techniques de traduction et médiation linguistique</p><ul><li>Traduire un script d’appel du français vers l’anglais</li><li>Comparer des équivalents adaptés au vocabulaire professionnel</li></ul></div>
+</div>
+</section>
+
+<div class="module-modal" id="moduleModal" aria-hidden="true">
+	<div class="module-modal-content">
+		<button class="module-modal-close" id="moduleModalClose" aria-label="Fermer">×</button>
+		<div class="module-modal-header">
+			<div class="module-num" id="modalModuleNum">1</div>
+			<div>
+				<h3 id="modalModuleTitle">Titre du module</h3>
+				<p id="modalModuleDescription" style="margin-top:.5rem;color:var(--gray)"></p>
+			</div>
+		</div>
+		<div>
+			<h4>Exercices</h4>
+			<ul class="module-modal-list" id="modalModuleList"></ul>
+		</div>
+	</div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+<h2 class="fade-up">Prêt à devenir téléconseiller bilingue ?</h2>
+<p class="fade-up">Rejoignez la plateforme FOS-IA et accédez aux 5 modules, exercices interactifs et outils d'analyse pédagogique dès aujourd'hui.</p>
+<a href="#" class="cta-btn fade-up">S'inscrire gratuitement</a>
+</section>
+
+<!-- RELATED -->
+<section class="related" id="related">
+<h2 class="related-title fade-up">Publications similaires</h2>
+<div class="related-grid">
+<div class="related-card fade-up">
+<div class="related-img" style="background:linear-gradient(135deg,#6C5CE7,#a29bfe)"></div>
+<div class="related-body"><div class="related-date">01 Mai 2026</div><h4>Comment le FOS transforme la formation professionnelle au Maroc</h4></div>
+</div>
+<div class="related-card fade-up">
+<div class="related-img" style="background:linear-gradient(135deg,#00B894,#55efc4)"></div>
+<div class="related-body"><div class="related-date">28 Avr 2026</div><h4>L'intelligence artificielle au service de l'apprentissage des langues</h4></div>
+</div>
+<div class="related-card fade-up">
+<div class="related-img" style="background:linear-gradient(135deg,#FD79A8,#fab1a0)"></div>
+<div class="related-body"><div class="related-date">15 Avr 2026</div><h4>Les 5 compétences clés pour réussir en centre d'appel francophone</h4></div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" id="contact">
+<div class="footer-grid">
+<div class="footer-col">
+<h5>FOS-IA</h5>
+<p>Plateforme FOS-IA de formation en ligne pour téléconseiller bilingue — exercices interactifs, correction automatique, feedback pseudo-IA et analyse pédagogique simulée.</p>
+<p style="margin-top:.8rem;font-size:.8rem;opacity:.6">Réalisé par <strong style="color:#fff">Abdelmajid EL MAJDOUB</strong><br>Sous la direction de <strong style="color:#fff">Pr. Driss ELOMARI</strong></p>
+<div class="footer-social">
+<a href="#"><i class="fab fa-facebook-f"></i></a>
+<a href="#"><i class="fab fa-twitter"></i></a>
+<a href="#"><i class="fab fa-linkedin-in"></i></a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+</div>
+</div>
+<div class="footer-col">
+<h5>Informations</h5>
+<a href="#">Conditions générales</a>
+<a href="#">Politique de confidentialité</a>
+<a href="#">Politique des cookies</a>
+<a href="#">Politique d'annulation</a>
+</div>
+<div class="footer-col">
+<h5>Pages Utiles</h5>
+<a href="#">Accueil</a>
+<a href="#">Blog</a>
+<a href="#">À propos</a>
+<a href="#">Devenir Formateur</a>
+</div>
+<div class="footer-col">
+<h5>Support</h5>
+<a href="#">Contacter le support</a>
+<a href="#">Aide & FAQ</a>
+<a href="#">Ressources</a>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2026 FOS-IA · Plateforme Téléconseiller Bilingue. Tous droits réservés.</p>
+</div>
+</footer>
+
+<script>
+// Scroll animations
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.1});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+
+// Nav shadow on scroll
+window.addEventListener('scroll',()=>{
+const n=document.getElementById('navbar');
+n.style.boxShadow=window.scrollY>50?'0 2px 20px rgba(0,0,0,0.08)':'none';
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+a.addEventListener('click',e=>{
+e.preventDefault();
+const t=document.querySelector(a.getAttribute('href'));
+if(t)t.scrollIntoView({behavior:'smooth'});
+document.getElementById('navLinks').classList.remove('active');
+});
+});
+
+const moduleData=[
+	{id:1,title:'Lexique',description:'Vocabulaire spécialisé et terminologie professionnelle',exercises:['Associer les termes de centre d’appel à leur définition','Compléter un glossaire métier avec des expressions clés','Identifier le sens précis de mots utiles au support client']},
+	{id:2,title:'Pragmatique',description:'Communication contextuelle et actes de langage',exercises:['Choisir les formules adaptées selon le type d’appel','Analyser des dialogues et repérer l’intention de l’énoncé','Transformer une phrase en un message plus professionnel']},
+	{id:3,title:'Compréhension',description:'Compréhension orale et écrite de documents professionnels',exercises:['Répondre à des questions sur un extrait de conversation client','Identifier les informations essentielles dans un e-mail professionnel','Comparer deux documents et en extraire les points clés']},
+	{id:4,title:'Production',description:'Rédaction et expression orale en contexte professionnel',exercises:['Rédiger un message de suivi client clair et professionnel','Proposer une réponse structurée à une réclamation','Construire une phrase de clôture adaptée à un appel client']},
+	{id:5,title:'Traduction',description:'Techniques de traduction et médiation linguistique',exercises:['Traduire un script d’appel du français vers l’anglais','Comparer des équivalents adaptés au vocabulaire professionnel','Choisir la meilleure option de traduction pour un message client']}
+];
+
+const moduleModal=document.getElementById('moduleModal');
+const moduleModalClose=document.getElementById('moduleModalClose');
+const modalModuleNum=document.getElementById('modalModuleNum');
+const modalModuleTitle=document.getElementById('modalModuleTitle');
+const modalModuleDescription=document.getElementById('modalModuleDescription');
+const modalModuleList=document.getElementById('modalModuleList');
+
+document.querySelectorAll('.module-card').forEach(card=>{
+	card.addEventListener('click',()=>{
+		const num=card.querySelector('.module-num').textContent.trim();
+		const data=moduleData.find(m=>String(m.id)===num);
+		if(!data)return;
+		modalModuleNum.textContent=data.id;
+		modalModuleTitle.textContent=data.title;
+		modalModuleDescription.textContent=data.description;
+		modalModuleList.innerHTML=data.exercises.map(ex=>`<li>${ex}</li>`).join('');
+		moduleModal.classList.add('active');
+		moduleModal.setAttribute('aria-hidden','false');
+	});
+});
+
+moduleModalClose.addEventListener('click',()=>{
+	moduleModal.classList.remove('active');
+	moduleModal.setAttribute('aria-hidden','true');
+});
+
+moduleModal.addEventListener('click',e=>{
+	if(e.target===moduleModal){
+		moduleModal.classList.remove('active');
+		moduleModal.setAttribute('aria-hidden','true');
+	}
+});
+</script>
+</body>
+</html>
